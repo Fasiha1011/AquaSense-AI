@@ -72,5 +72,5 @@ AquaSense AI is an educational machine learning project. Its predictions are est
 **Fasiha Faraz**
 
 ## Project Type
-Academic Project — Artificial Intelligence / Machine Learning
+Academic Project — Artificial Intelligence 
 
