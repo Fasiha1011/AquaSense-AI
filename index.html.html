@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AquaSense AI</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#071521;color:#edfaff;font-family:Segoe UI,Arial,sans-serif}
+header{padding:22px 7%;border-bottom:1px solid #294958;display:flex;justify-content:space-between;align-items:center}
+.brand{font-size:23px;font-weight:800}
+.brand span{color:#48e0d0}
+.tag{color:#48e0d0;border:1px solid #286b70;border-radius:30px;padding:8px 12px;font-size:12px}
+main{max-width:1400px;margin:42px auto;padding:0 22px}
+.eyebrow{color:#48e0d0;text-transform:uppercase;letter-spacing:2px;font-size:12px}
+h1{font-size:clamp(32px,5vw,48px);margin:12px 0}
+p{color:#a9c3d0;line-height:1.7}
+.layout{display:grid;grid-template-columns:1.7fr .8fr;gap:26px}
+.card{background:#102635;border:1px solid #294958;border-radius:20px;padding:30px}
+h2{margin-top:0;font-size:25px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:20px 22px}
+label{display:block;margin-bottom:9px;font-size:15px}
+input{width:100%;padding:15px;background:#081b28;color:white;border:1px solid #345363;border-radius:12px;font-size:16px}
+input:focus{outline:2px solid #48e0d0}
+button{width:100%;padding:16px;margin-top:24px;border:0;border-radius:11px;background:linear-gradient(90deg,#48e0d0,#63a8ff);font-weight:800;font-size:15px;cursor:pointer}
+.result{margin-top:20px;background:#081b28;border:1px solid #48e0d0;border-radius:14px;padding:20px}
+.result h3{font-size:21px}
+.number{font-size:28px;font-weight:bold}
+.feature{padding:15px 0}
+.feature small{display:block;color:#a9c3d0;line-height:1.7;margin-top:10px;font-size:15px}
+.error{color:#ffb5b5}
+footer{text-align:center;color:#8aa8b7;font-size:12px;padding:25px}
+@media(max-width:780px){.layout{grid-template-columns:1fr}}
+@media(max-width:480px){.fields{grid-template-columns:1fr}header{padding:18px}main{margin:25px auto}.card{padding:18px}}
+</style>
+</head>
+
+<body>
+<header>
+    <div class="brand">💧 AquaSense <span>AI</span></div>
+    <div class="tag">ANN MODEL</div>
+</header>
+
+<main>
+    <div class="eyebrow">Intelligent water analysis</div>
+    <h1>Understand your water.<br>
+        <span style="color:#48e0d0">Explore the data.</span>
+    </h1>
+    <p>Enter water-quality measurements for an educational prediction from a trained artificial neural network.</p>
+
+    <div class="layout">
+        <section class="card">
+            <h2>Water parameters</h2>
+            <p>Enter measurements in the dataset's units. Leave unavailable values blank.</p>
+
+            <form method="POST">
+                <div class="fields">
+                    {% for field in fields %}
+                    <div>
+                        <label for="{{ field }}">{{ labels[field] }}</label>
+                        <input id="{{ field }}"
+                               name="{{ field }}"
+                               type="number"
+                               step="any"
+                               placeholder="Enter value"
+                               value="{{ values.get(field, '') }}">
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="submit">✦ Analyze Water Data</button>
+            </form>
+
+            {% if error %}
+            <p class="error">{{ error }}</p>
+            {% endif %}
+
+            {% if result %}
+            <div class="result">
+                <h3>{{ result.title }}</h3>
+                <div class="number">{{ result.probability }}%</div>
+                <p>Model-estimated probability for class 1. This is not a certified water-safety result.</p>
+            </div>
+            {% endif %}
+        </section>
+
+        <aside class="card">
+            <h2>Safety first</h2>
+            <div class="feature">
+                ⚠️
+                <small>
+                    Do not use this model to decide whether water is safe to drink.
+                    This is an educational machine-learning prediction, not a
+                    certified water-quality test. Appropriate laboratory testing
+                    is required to assess drinking-water safety.
+                </small>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<footer>AquaSense AI · Educational machine-learning project · Local demo</footer>
+</body>
+</html>
